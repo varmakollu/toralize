@@ -1,6 +1,10 @@
 /* toralize.c */
 #include "toralize.h"
 
+Req *request(const char *dstip, const int dstport) {
+    
+}
+
 int main(int argc, char *argv[]) {
     char *host;
     int port, s;
