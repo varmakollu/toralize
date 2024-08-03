@@ -2,7 +2,14 @@
 #include "toralize.h"
 
 Req *request(const char *dstip, const int dstport) {
+    Req *req;
+
+    req = malloc(reqsize);
     
+    req->vn = 4;
+    req->cd = 1;
+    req->dstport = htons(dstport);
+    req->dstip = inet_addr(dstip);
 }
 
 int main(int argc, char *argv[]) {
