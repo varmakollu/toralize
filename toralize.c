@@ -10,7 +10,7 @@ Req *request(const char *dstip, const int dstport) {
     req->cd = 1;
     req->dstport = htons(dstport);
     req->dstip = inet_addr(dstip);
-    strncpy(req->username, USERNAME, 7);
+    strncpy((char*)req->userid, USERNAME, 7);
 
     return req;
 }
@@ -24,11 +24,9 @@ int main(int argc, char *argv[]) {
     char buf[ressize];
     int success;
 
-
     if (argc < 3) {
-        fprintf(stderr, "Usage: %s <host> <port>\n",
-        argv[0]);
-
+        fprintf(stderr, "Usage: %s <host> <port>\n", argv[0]);
+        
         return -1;
     }
 
@@ -65,21 +63,17 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    res = buf;
+    res = (Res *)buf;
     success = (res->cd == 90);
-    if (!success){
-        fprintf(stderr, "Unable to traverse"
-            "the proxy, error the code: %d\n",
-            res->cd);
+    if (!success) {
+        fprintf(stderr, "Unable to traverse the proxy, error code: %d\n", res->cd);
+        close(s);
+        free(req);
 
-            close(s);
-            free(req);
-
-            return -1;
+        return -1;
     }
     
-    printf("Successfully connected through the proxy to "
-        "%s:%d\n", host, port);
+    printf("Successfully connected through the proxy to %s:%d\n", host, port);
 
     close(s);
     free(req);
