@@ -10,7 +10,7 @@ Req *request(const char *dstip, const int dstport) {
     req->cd = 1;
     req->dstport = htons(dstport);
     req->dstip = inet_addr(dstip);
-    strncpy((char*)req->userid, USERNAME, 7);
+    strncpy((char*)req->userid, USERNAME, 8);
 
     return req;
 }
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 
     if (argc < 3) {
         fprintf(stderr, "Usage: %s <host> <port>\n", argv[0]);
-        
+
         return -1;
     }
 
