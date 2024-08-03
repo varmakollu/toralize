@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
     Req *req;
     Res *res;
     char buf[ressize];
+    int success;
+
 
     if (argc < 3) {
         fprintf(stderr, "Usage: %s <host> <port>\n",
@@ -63,9 +65,24 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
+    res = buf;
+    success = (res->cd == 90);
+    if (!success){
+        fprintf(stderr, "Unable to traverse"
+            "the proxy, error the code: %d\n",
+            res->cd);
+
+            close(s);
+            free(req);
+
+            return -1;
+    }
+    
+    printf("Successfully connected through the proxy to "
+        "%s:%d\n", host, port);
+
     close(s);
+    free(req);
 
     return 0;
 }
-
-
