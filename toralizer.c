@@ -1,5 +1,5 @@
 /* toralize.c */
-#include "toralize.h"
+#include "toralizer.h"
 
 Req *request(const char *dstip, const int dstport) {
     Req *req;
