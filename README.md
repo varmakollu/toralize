@@ -44,7 +44,7 @@ This command attempts to connect to the target IP `46.227.66.141` on port `80` t
 To compile the Toralize program, use the provided `Makefile` or compile manually with GCC:
 
 ```bash
-gcc -o toralize toralize.c -Wall
+gcc toralizer.c -o toralizer.so -fPIC -shared -ldl -D_GNU_SOURCE
 ```
 
 Ensure all source files (`toralize.c` and `toralize.h`) are in the same directory.
