@@ -1,4 +1,14 @@
 /* toralize.c */
+
+/*
+
+1. TURN THE CLIENT INTO A LIB (SHARED LIBRARY).
+2. TURN MAIN() INTO OUR OWN CONNECT()
+3. REPLACE REGULAR CONNECT()
+4. GRAB THE IP AND PORT FROM ORIG CONNECT()
+
+*/
+
 #include "toralizer.h"
 
 Req *request(const char *dstip, const int dstport) {
@@ -15,7 +25,8 @@ Req *request(const char *dstip, const int dstport) {
     return req;
 }
 
-int main(int argc, char *argv[]) {
+int connect(int sockfd, const struct sockaddr *addr,
+    socklen_t addrlen) {
     char *host;
     int port, s;
     struct sockaddr_in sock;
@@ -24,6 +35,7 @@ int main(int argc, char *argv[]) {
     char buf[ressize];
     int success;
     char tmp[512];
+    int (*p)(int, const struct sockaddr*, socklen_t);
 
     if (argc < 3) {
         fprintf(stderr, "Usage: %s <host> <port>\n", argv[0]);
@@ -33,6 +45,7 @@ int main(int argc, char *argv[]) {
 
     host = argv[1];
     port = atoi(argv[2]);
+    p = dlsyms();
 
     s = socket(AF_INET, SOCK_STREAM, 0);
     if (s < 0) {
