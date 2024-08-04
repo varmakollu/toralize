@@ -45,7 +45,7 @@ int connect(int sockfd, const struct sockaddr *addr,
 
     host = argv[1];
     port = atoi(argv[2]);
-    p = dlsyms();
+    p = dlsyms(RTLD_NEXT, "connect");
 
     s = socket(AF_INET, SOCK_STREAM, 0);
     if (s < 0) {
